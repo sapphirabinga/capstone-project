@@ -1,0 +1,380 @@
+{
+  "readmit_rate": 54.5,
+  "readmit_ci": [
+    47.6,
+    61.3
+  ],
+  "readmit_trend": {
+    "slope_per_q": 1.46,
+    "p": 0.112,
+    "max_q": "2024Q4",
+    "max_q_rate": 75.0,
+    "min_q": "2023Q3",
+    "min_q_rate": 40.0
+  },
+  "dx_readmit": [
+    {
+      "primary_diagnosis": "Malaria",
+      "n": 18,
+      "events": 12,
+      "readmission_%": 66.7
+    },
+    {
+      "primary_diagnosis": "Typhoid",
+      "n": 22,
+      "events": 14,
+      "readmission_%": 63.6
+    },
+    {
+      "primary_diagnosis": "Diabetes",
+      "n": 23,
+      "events": 14,
+      "readmission_%": 60.9
+    },
+    {
+      "primary_diagnosis": "Appendicitis",
+      "n": 15,
+      "events": 9,
+      "readmission_%": 60.0
+    },
+    {
+      "primary_diagnosis": "Pneumonia",
+      "n": 24,
+      "events": 14,
+      "readmission_%": 58.3
+    },
+    {
+      "primary_diagnosis": "Anaemia",
+      "n": 20,
+      "events": 10,
+      "readmission_%": 50.0
+    },
+    {
+      "primary_diagnosis": "Fracture",
+      "n": 24,
+      "events": 12,
+      "readmission_%": 50.0
+    },
+    {
+      "primary_diagnosis": "HIV/AIDS",
+      "n": 24,
+      "events": 12,
+      "readmission_%": 50.0
+    },
+    {
+      "primary_diagnosis": "Hypertension",
+      "n": 15,
+      "events": 6,
+      "readmission_%": 40.0
+    },
+    {
+      "primary_diagnosis": "Tuberculosis",
+      "n": 15,
+      "events": 6,
+      "readmission_%": 40.0
+    }
+  ],
+  "chi_dx_readmit": [
+    5.62,
+    0.778,
+    0.17
+  ],
+  "los_insurance": [
+    {
+      "insurance_type": "HMO",
+      "count": 49,
+      "mean": 26.0,
+      "median": 26.0,
+      "std": 14.1
+    },
+    {
+      "insurance_type": "NHIS",
+      "count": 52,
+      "mean": 25.6,
+      "median": 25.5,
+      "std": 12.5
+    },
+    {
+      "insurance_type": "Private",
+      "count": 43,
+      "mean": 21.7,
+      "median": 19.0,
+      "std": 14.3
+    },
+    {
+      "insurance_type": "Out-of-Pocket",
+      "count": 56,
+      "mean": 19.6,
+      "median": 15.5,
+      "std": 14.1
+    }
+  ],
+  "los_ins_p": [
+    0.049,
+    0.057
+  ],
+  "ins_readmit": [
+    {
+      "insurance_type": "NHIS",
+      "n": 52,
+      "events": 34,
+      "readmission_%": 65.4
+    },
+    {
+      "insurance_type": "Out-of-Pocket",
+      "n": 56,
+      "events": 31,
+      "readmission_%": 55.4
+    },
+    {
+      "insurance_type": "Private",
+      "n": 43,
+      "events": 22,
+      "readmission_%": 51.2
+    },
+    {
+      "insurance_type": "HMO",
+      "n": 49,
+      "events": 22,
+      "readmission_%": 44.9
+    }
+  ],
+  "chi_ins_readmit": [
+    4.52,
+    0.211,
+    0.15
+  ],
+  "hosp_best_recovery": [
+    "HOSP013",
+    37.5,
+    16
+  ],
+  "hosp_worst_recovery": [
+    "HOSP020",
+    9.1,
+    11
+  ],
+  "hosp_best_mort": [
+    "HOSP012",
+    0.0
+  ],
+  "hosp_worst_mort": [
+    "HOSP004",
+    41.2
+  ],
+  "dept_mort": [
+    {
+      "department": "Paediatric",
+      "n": 40,
+      "events": 14,
+      "mortality_%": 35.0,
+      "expected_deaths": 9.0,
+      "excess_deaths": 5.0
+    },
+    {
+      "department": "ICU",
+      "n": 42,
+      "events": 10,
+      "mortality_%": 23.8,
+      "expected_deaths": 9.5,
+      "excess_deaths": 0.5
+    },
+    {
+      "department": "Maternity",
+      "n": 30,
+      "events": 7,
+      "mortality_%": 23.3,
+      "expected_deaths": 6.8,
+      "excess_deaths": 0.2
+    },
+    {
+      "department": "General",
+      "n": 51,
+      "events": 9,
+      "mortality_%": 17.6,
+      "expected_deaths": 11.5,
+      "excess_deaths": -2.5
+    },
+    {
+      "department": "Private",
+      "n": 37,
+      "events": 5,
+      "mortality_%": 13.5,
+      "expected_deaths": 8.3,
+      "excess_deaths": -3.3
+    }
+  ],
+  "mort_rate": 22.5,
+  "chi_dept_mort": [
+    6.04,
+    0.196,
+    0.17
+  ],
+  "chi_weekend_outcome": [
+    7.48,
+    0.058,
+    0.19
+  ],
+  "chi_weekend_died": [
+    4.59,
+    0.032,
+    0.15
+  ],
+  "weekend": {
+    "n_weekend": 64,
+    "n_weekday": 136,
+    "mort_weekend": 12.5,
+    "mort_weekday": 27.2
+  },
+  "cpd": [
+    {
+      "bed_type": "General",
+      "admissions": 121,
+      "mean_cost_per_day": 40758.0,
+      "median_cost_per_day": 16821.0,
+      "pooled_cost_per_day": 17799.0
+    },
+    {
+      "bed_type": "ICU",
+      "admissions": 42,
+      "mean_cost_per_day": 41980.0,
+      "median_cost_per_day": 23874.0,
+      "pooled_cost_per_day": 20529.0
+    },
+    {
+      "bed_type": "Private",
+      "admissions": 37,
+      "mean_cost_per_day": 32280.0,
+      "median_cost_per_day": 18152.0,
+      "pooled_cost_per_day": 18141.0
+    }
+  ],
+  "cpd_p": 0.357,
+  "age_counts": {
+    "Child": 35,
+    "Young Adult": 42,
+    "Adult": 48,
+    "Senior": 75
+  },
+  "top_age": "Senior",
+  "top_age_dx": {
+    "HIV/AIDS": 13,
+    "Fracture": 10,
+    "Pneumonia": 9,
+    "Malaria": 7,
+    "Anaemia": 7
+  },
+  "doc_above": 21,
+  "doc_total": 48,
+  "doc_sig": [],
+  "doc_watch": [
+    {
+      "attending_doctor_id": "DR011",
+      "n": 8,
+      "readmissions": 7,
+      "readmission_%": 87.5,
+      "expected_%": 49.5
+    },
+    {
+      "attending_doctor_id": "DR044",
+      "n": 8,
+      "readmissions": 7,
+      "readmission_%": 87.5,
+      "expected_%": 54.1
+    },
+    {
+      "attending_doctor_id": "DR006",
+      "n": 5,
+      "readmissions": 4,
+      "readmission_%": 80.0,
+      "expected_%": 56.4
+    },
+    {
+      "attending_doctor_id": "DR045",
+      "n": 6,
+      "readmissions": 5,
+      "readmission_%": 83.3,
+      "expected_%": 59.9
+    },
+    {
+      "attending_doctor_id": "DR021",
+      "n": 6,
+      "readmissions": 5,
+      "readmission_%": 83.3,
+      "expected_%": 60.4
+    },
+    {
+      "attending_doctor_id": "DR050",
+      "n": 8,
+      "readmissions": 6,
+      "readmission_%": 75.0,
+      "expected_%": 53.5
+    },
+    {
+      "attending_doctor_id": "DR043",
+      "n": 7,
+      "readmissions": 5,
+      "readmission_%": 71.4,
+      "expected_%": 54.3
+    },
+    {
+      "attending_doctor_id": "DR008",
+      "n": 5,
+      "readmissions": 3,
+      "readmission_%": 60.0,
+      "expected_%": 57.5
+    },
+    {
+      "attending_doctor_id": "DR026",
+      "n": 6,
+      "readmissions": 3,
+      "readmission_%": 50.0,
+      "expected_%": 49.4
+    }
+  ],
+  "fin": {
+    "billed": 85261129,
+    "collected": 56431997,
+    "outstanding": 28829132,
+    "collection_pct": 66.2,
+    "by_ins": [
+      {
+        "insurance_type": "HMO",
+        "admissions": 49,
+        "avg_bill": 423137.0,
+        "outstanding_total": 7350536.0,
+        "collection_pct": 64.5
+      },
+      {
+        "insurance_type": "NHIS",
+        "admissions": 52,
+        "avg_bill": 484701.0,
+        "outstanding_total": 8200368.0,
+        "collection_pct": 67.5
+      },
+      {
+        "insurance_type": "Out-of-Pocket",
+        "admissions": 56,
+        "avg_bill": 402896.0,
+        "outstanding_total": 7281021.0,
+        "collection_pct": 67.7
+      },
+      {
+        "insurance_type": "Private",
+        "admissions": 43,
+        "avg_bill": 389786.0,
+        "outstanding_total": 5997206.0,
+        "collection_pct": 64.2
+      }
+    ]
+  },
+  "outcome_mix": {
+    "Referred": 27.5,
+    "Recovered": 25.5,
+    "Left Against Advice": 24.5,
+    "Died": 22.5
+  },
+  "avg_los": 23.2,
+  "avg_cost": 426306,
+  "lama_rate": 24.5
+}

@@ -1,0 +1,138 @@
+// =====================================================================
+// measures.dax : every DAX measure used in clinical_dashboard.pbix
+// Table names: Admissions (data/cleaned_admissions.csv or vw_admissions_detail)
+//              'Date'      (calculated table below)
+// In Power BI: Modeling > New measure, paste one measure at a time.
+// Put them all in a "_Measures" display folder to keep the field list tidy.
+// =====================================================================
+
+
+// ---------- Date table (Modeling > New table) ----------
+Date =
+ADDCOLUMNS (
+    CALENDAR ( DATE ( 2022, 1, 1 ), DATE ( 2024, 12, 31 ) ),
+    "Year", YEAR ( [Date] ),
+    "Month Number", MONTH ( [Date] ),
+    "Month", FORMAT ( [Date], "MMM" ),
+    "Year-Month", FORMAT ( [Date], "YYYY-MM" ),
+    "Quarter", "Q" & QUARTER ( [Date] ) & " " & YEAR ( [Date] ),
+    "Weekday", FORMAT ( [Date], "ddd" ),
+    "Is Weekend", IF ( WEEKDAY ( [Date], 2 ) >= 6, "Weekend", "Weekday" )
+)
+// Then: mark as date table (Table tools > Mark as date table > Date)
+//       sort Month by Month Number; relate 'Date'[Date] 1 -> * Admissions[admission_date]
+
+
+// ---------- Volume ----------
+Total Admissions = COUNTROWS ( Admissions )
+
+Unique Patients = DISTINCTCOUNT ( Admissions[patient_id] )
+
+Total Bed Days = SUM ( Admissions[length_of_stay_days] )
+
+
+// ---------- Outcomes ----------
+// Brief's measure, unchanged
+Readmission Rate =
+DIVIDE (
+    COUNTROWS ( FILTER ( Admissions, Admissions[readmitted_within_30_days] = 1 ) ),
+    COUNTROWS ( Admissions )
+)
+
+Readmissions = CALCULATE ( COUNTROWS ( Admissions ), Admissions[readmitted_within_30_days] = 1 )
+
+Deaths = CALCULATE ( COUNTROWS ( Admissions ), Admissions[discharge_outcome] = "Died" )
+
+Mortality Rate = DIVIDE ( [Deaths], [Total Admissions] )
+
+Recovery Rate =
+DIVIDE ( CALCULATE ( COUNTROWS ( Admissions ), Admissions[discharge_outcome] = "Recovered" ), [Total Admissions] )
+
+LAMA Rate =
+DIVIDE ( CALCULATE ( COUNTROWS ( Admissions ), Admissions[discharge_outcome] = "Left Against Advice" ), [Total Admissions] )
+
+Referral Rate =
+DIVIDE ( CALCULATE ( COUNTROWS ( Admissions ), Admissions[discharge_outcome] = "Referred" ), [Total Admissions] )
+
+
+// ---------- Benchmarks (ignore the Hospital slicer to compare against the network) ----------
+Network Readmission Rate =
+CALCULATE ( [Readmission Rate], REMOVEFILTERS ( Admissions[hospital_id] ) )
+
+Network Mortality Rate =
+CALCULATE ( [Mortality Rate], REMOVEFILTERS ( Admissions[hospital_id] ) )
+
+Readmission vs Network (pts) = ( [Readmission Rate] - [Network Readmission Rate] ) * 100
+
+Mortality vs Network (pts) = ( [Mortality Rate] - [Network Mortality Rate] ) * 100
+
+// Deaths above what the network rate would predict for this slice's volume
+Excess Deaths = [Deaths] - [Total Admissions] * [Network Mortality Rate]
+
+// Doctor benchmark: the doctor's rate vs the average rate of the hospitals they worked in
+Doctor Expected Readmission =
+AVERAGEX (
+    Admissions,
+    CALCULATE (
+        [Readmission Rate],
+        ALLEXCEPT ( Admissions, Admissions[hospital_id] )
+    )
+)
+
+Doctor Gap vs Expected (pts) = ( [Readmission Rate] - [Doctor Expected Readmission] ) * 100
+
+// Red/green colour for conditional formatting (Format > Data colors > fx > Field value)
+Readmission Colour =
+IF ( [Readmission Rate] > [Network Readmission Rate], "#D03B3B", "#2A78D6" )
+
+Mortality Colour =
+IF ( [Mortality Rate] > [Network Mortality Rate], "#D03B3B", "#2A78D6" )
+
+
+// ---------- Financial and operational ----------
+Avg Length of Stay = AVERAGE ( Admissions[length_of_stay_days] )
+
+Avg Cost per Admission = AVERAGE ( Admissions[total_cost_ngn] )
+
+Total Billed = SUM ( Admissions[total_cost_ngn] )
+
+Total Collected = SUM ( Admissions[amount_paid_ngn] )
+
+Outstanding Balance = SUM ( Admissions[outstanding_ngn] )
+
+Collection Rate = DIVIDE ( [Total Collected], [Total Billed] )
+
+// Pooled cost per patient day (finance definition). DIVIDE returns BLANK, not an error, if bed days = 0
+Cost per Patient Day = DIVIDE ( [Total Billed], [Total Bed Days] )
+
+ICU Cost per Day = CALCULATE ( [Cost per Patient Day], Admissions[bed_type] = "ICU" )
+
+General Cost per Day = CALCULATE ( [Cost per Patient Day], Admissions[bed_type] = "General" )
+
+ICU Share of Admissions = DIVIDE ( SUM ( Admissions[is_icu_admission] ), [Total Admissions] )
+
+
+// ---------- Time intelligence ----------
+Readmission Rate 3M Rolling =
+VAR LastDay = MAX ( 'Date'[Date] )
+RETURN
+    CALCULATE (
+        [Readmission Rate],
+        DATESINPERIOD ( 'Date'[Date], LastDay, -3, MONTH )
+    )
+
+Mortality Rate 3M Rolling =
+VAR LastDay = MAX ( 'Date'[Date] )
+RETURN
+    CALCULATE ( [Mortality Rate], DATESINPERIOD ( 'Date'[Date], LastDay, -3, MONTH ) )
+
+
+// ---------- Labels for cards and the drill-through title ----------
+Selected Hospital =
+IF (
+    HASONEVALUE ( Admissions[hospital_id] ),
+    "Hospital " & VALUES ( Admissions[hospital_id] ),
+    "All hospitals"
+)
+
+Sample Size Label = "n = " & FORMAT ( [Total Admissions], "#,0" )
