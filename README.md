@@ -74,9 +74,6 @@ hospital-outcomes-analytics/
 ├── excel/
 │   └── hospital_scorecard.xlsx
 ├── powerbi/
-│   ├── BUILD_GUIDE.md
-│   ├── measures.dax
-│   ├── theme.json
 │   └── clinical_dashboard.pbix           # built in Power BI Desktop
 └── docs/
     ├── data_dictionary.md
